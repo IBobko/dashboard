@@ -1,6 +1,5 @@
-from bs4 import BeautifulSoup
 import requests
-
+from bs4 import BeautifulSoup
 
 
 class WebsiteParser:
@@ -9,33 +8,33 @@ class WebsiteParser:
 
     def parse(self):
         try:
-            # Получение HTML-кода страницы
+            # Get the HTML code of the page
             response = requests.get(self.url)
-            response.raise_for_status()  # Проверка наличия ошибок
+            response.raise_for_status()  # Check for errors
 
-            # Создание объекта BeautifulSoup
+            # Create a BeautifulSoup object
             soup = BeautifulSoup(response.text, 'html.parser')
 
-            # Находим таблицу на странице
+            # Find the table on the page
             table = soup.find('table', id='content_table')
 
-            # Находим элемент tbody
+            # Find the tbody element
             tbody = table.find('tbody')
 
-            # Список для хранения первых столбцов
-            first_columns = []
+            # List to store the values of the first column
+            exchange_info = []
 
-            # Итерация по строкам таблицы внутри tbody
+            # Iterate over the table rows inside tbody
             for row in tbody.find_all('tr'):
-                # Получение всех ячеек в текущей строке
+                # Get all cells in the current row
                 cells = row.find_all('td')
                 if cells:
-                    # Находим внутренний <div> с классом 'ca' во второй ячейке (втором столбце)
+                    # Find the inner <div> with class 'ca' in the second cell (second column)
                     div = cells[1].find('div', class_='ca')
                     div2 = cells[2].find('div', class_='fs')
                     div3 = cells[2].find('div', class_='fm')
                     if div:
-                        # Добавление текста внутреннего <div> в список
+                        # Add the text of the inner <div> to the list
                         first_column = div.text.strip()
                         s = next(div2.strings).strip()
 
@@ -43,13 +42,12 @@ class WebsiteParser:
                         fr = next(iter).strip()
                         to = next(iter).strip()
                         data = {
-                            'companyName' : first_column,
+                            'companyName': first_column,
                             'rate': s,
                             'from': fr,
                             'to': to
                         }
-                        first_columns.append(data)
-
-            return first_columns
+                        exchange_info.append(data)
+            return exchange_info
         except requests.exceptions.RequestException as e:
-            return f'Ошибка при парсинге страницы: {str(e)}'
+            return f'Error parsing the page: {str(e)}'
