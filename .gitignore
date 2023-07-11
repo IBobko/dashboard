@@ -3,3 +3,17 @@
 
 # Virtual environments
 .venv/
+
+# Python bytecode
+__pycache__/
+
+# Environment files
+.env
+
+# Other
+bestchange_*
+*.session
+
+
+# Log files
+*.log
