@@ -30,6 +30,6 @@ def bestchange_parse():
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=bestchange_parse, trigger="interval", minutes=5)  # You can configure the schedule here
+    scheduler.add_job(func=bestchange_parse, trigger="interval", minutes=30)  # You can configure the schedule here
     scheduler.start()
     get_app().scheduler = scheduler
