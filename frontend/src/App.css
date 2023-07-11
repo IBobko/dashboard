@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+body{
+  padding: 20px;
+}
+
+
+#grid-container {
+  display: grid;
+  grid-template-columns: repeat(28, 1fr);
+  grid-template-rows: repeat(28, 1fr);
+  background-color: #e9edf5;
+  margin: 20px 0;
+}
+
+.grid-cell {
+  border: 1px solid #bfc3c9;
+  padding-top: 100%;
+}
+
+#predictions-table{
+  margin-bottom: 20px;
+}
