@@ -1,10 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 function ChartPage() {
     const canvasRef = useRef(null);
     const [renderCount, setRenderCount] = useState(0);
+    const [boolMatrix, setBoolMatrix] = useState(() => {
+        return new Array(8).fill(null).map(() => new Array(8).fill(false));
+    });
 
-    const redraw = () => {
+    const redraw = useCallback(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         const grid = 8;
@@ -21,24 +24,29 @@ function ChartPage() {
                 context.lineWidth = 1;
                 context.strokeStyle = '#ddd'; // Цвет сетки
                 context.stroke();
+
+                // Закрашиваем ячейку, если в булевой матрице стоит true
+                if (boolMatrix && boolMatrix[y] && boolMatrix[y][x]) {
+                    context.fillStyle = "#FF0000"; // Цвет заливки
+                    context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                }
             }
         }
+    }, [boolMatrix]);
 
-        // Закрашиваем случайные ячейки
-        for(let i = 0; i < 10; i++) { // Закрашиваем 10 случайных ячеек, измените это значение, если хотите больше или меньше
-            const x = Math.floor(Math.random() * grid);
-            const y = Math.floor(Math.random() * grid);
-            context.fillStyle = "#FF0000"; // Цвет заливки
-            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-    }
-
-    useEffect(redraw, [renderCount]);
+    useEffect(() => {
+        redraw();
+    }, [renderCount, redraw]);
 
     return (
         <div>
             <canvas ref={canvasRef} width={160} height={160} />
-            <button onClick={() => setRenderCount(prevCount => prevCount + 1)}>Redraw</button>
+            <button onClick={() => {
+                setRenderCount(prevCount => prevCount + 1);
+                // Здесь вы можете обновить булеву матрицу по своему усмотрению
+                // Для примера, я просто переключаю значения в матрице
+                setBoolMatrix(boolMatrix.map(row => row.map(cell => !cell)));
+            }}>Redraw</button>
         </div>
     );
 }
