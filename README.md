@@ -1,15 +1,43 @@
-To obtain the directory structure of the project, you can use the following command:
+# Project Name
 
+This project is composed of a frontend and backend. The frontend is developed in ReactJS and the backend in Python.
+
+## Directory Structure
+
+The directory structure of the project is as follows:
+
+- **frontend**: This directory contains all the frontend code written in React.
+- **backend**: This directory contains all the backend code written in Python.
+
+## Getting Started
+
+### Prerequisites
+
+Before running this project, you should have the following installed:
+- Node.js and npm
+- Python
+- Any required Python libraries
+
+### Running the Frontend
+
+To start the frontend, navigate to the `frontend` directory and use the following command:
+
+```bash
+npm start
 ```
+
+### Running the Backend
+
+To start the `backend`, navigate to the backend directory and use the following command:
+```bash
+python start.py
+```
+This command will start the Python backend.
+
+### Additional Notes
+
+To see the directory structure of the project excluding certain directories such as .git, node_modules, venv, and .idea, you can use the following command:
+```bash
 find .  -not -path "*.git*" -not -path "*node_modules*" -not -path "*venv*" -not -path "*.idea*"
 ```
 
-This command will list all the files and directories in the project directory, excluding the .git directory,
-node_modules directory, venv directory, and .idea directory. It helps provide a clean and focused view of the project's
-directory structure.
-
-By running this command, you will get a clear overview of the project's organization and the files and directories it
-contains. This can be useful for understanding the project layout, locating specific files, or analyzing the overall
-project structure.
-
-Feel free to modify the command based on your specific requirements or add any additional filtering options as needed.
